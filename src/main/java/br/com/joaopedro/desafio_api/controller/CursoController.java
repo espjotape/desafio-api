@@ -1,11 +1,14 @@
 package br.com.joaopedro.desafio_api.controller;
 
 import br.com.joaopedro.desafio_api.entities.Curso;
+import br.com.joaopedro.desafio_api.exceptions.CursoNotFoundException;
+import br.com.joaopedro.desafio_api.exceptions.InvalidCourseDataException;
 
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.joaopedro.desafio_api.useCases.CursoUseCase;
-import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/cursos")
@@ -33,8 +36,14 @@ public class CursoController {
  }
 
  @PostMapping
- public ResponseEntity<Curso> criarCurso (@Valid @RequestBody Curso curso) {
-  return ResponseEntity.ok(cursoUseCase.criarCurso(curso));
+ public ResponseEntity<Curso> criarCurso (@RequestBody Curso curso) {
+  if(curso.getName() == null || curso.getCategory() == null) {
+    throw new InvalidCourseDataException("O nome e a categoria do curso são obrigatórios.");
+  }
+  // Lógica para salvar o curso (exemplo)
+  Curso novoCurso = cursoUseCase.criarCurso(curso);
+
+  return ResponseEntity.status(HttpStatus.CREATED).body(novoCurso);
  } 
 
  @GetMapping
@@ -47,17 +56,20 @@ public class CursoController {
 
   }
 
-  @PutMapping("/{id}")
-  public ResponseEntity<Curso> atualizarCurso(@PathVariable UUID id,@Valid @RequestBody Curso curso) {
-   try {
+ @PutMapping("/{id}")
+ public ResponseEntity<?> atualizarCurso(@PathVariable UUID id,@RequestBody Curso curso) {
+  try {
     return cursoUseCase.atualizarCurso(id, curso)
      .map(ResponseEntity::ok)
-     .orElse(ResponseEntity.notFound().build());
+     .orElseThrow(() -> new CursoNotFoundException("Curso não encontrado com o ID: " + id));
+   } catch(CursoNotFoundException e ) {
+    return ResponseEntity.status(404).body(e.getMessage());
    } catch (Exception e) {
     e.printStackTrace();
-    return ResponseEntity.status(500).body(null);
+    return ResponseEntity.status(500).body("Erro interno no servidor.");
    }
   }
+
   @DeleteMapping("/{id}")
   public ResponseEntity<String> deletarCurso(@PathVariable UUID id) {
    try {
