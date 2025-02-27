@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.joaopedro.desafio_api.useCases.CursoUseCase;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/cursos")
@@ -32,7 +33,7 @@ public class CursoController {
  }
 
  @PostMapping
- public ResponseEntity<Curso> criarCurso (@RequestBody Curso curso) {
+ public ResponseEntity<Curso> criarCurso (@Valid @RequestBody Curso curso) {
   return ResponseEntity.ok(cursoUseCase.criarCurso(curso));
  } 
 
@@ -47,7 +48,7 @@ public class CursoController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Curso> atualizarCurso(@PathVariable UUID id, @RequestBody Curso curso) {
+  public ResponseEntity<Curso> atualizarCurso(@PathVariable UUID id,@Valid @RequestBody Curso curso) {
    try {
     return cursoUseCase.atualizarCurso(id, curso)
      .map(ResponseEntity::ok)

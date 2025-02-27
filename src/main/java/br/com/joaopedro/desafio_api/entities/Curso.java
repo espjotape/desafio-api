@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Getter @Setter
@@ -23,9 +24,11 @@ public class Curso {
  @GeneratedValue(strategy = GenerationType.UUID)
  private UUID id;
 
+ @NotBlank(message = "O nome do curso é obrigatório.")
  @Column(nullable = false)
  private String name;
- 
+
+ @NotBlank(message = "A Categoria do curso é obrigatória.")
  @Column(nullable = false)
  private String category;
 
