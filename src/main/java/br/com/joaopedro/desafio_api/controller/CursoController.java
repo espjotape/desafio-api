@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -66,4 +67,15 @@ public class CursoController {
      return ResponseEntity.status(500).body("Erro ao deletar o curso.");
    }
   }
+
+  @PatchMapping("/{id}/active")
+  public ResponseEntity<String> checkCurso(@PathVariable UUID id) {
+   try {
+    cursoUseCase.checkCurso(id);
+    return ResponseEntity.ok("Curso ativado/desativado com sucesso.");
+   } catch (Exception e) {
+     e.printStackTrace();
+     return ResponseEntity.status(500).body("Erro ao ativar/desativar o curso.");
+   }
+ }
 }

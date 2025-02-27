@@ -49,4 +49,13 @@ public class CursoUseCase {
  public void delete(UUID id) {
   cursoRepository.deleteById(id);
  }
+
+ public Optional<Curso> checkCurso(UUID id) {
+  return cursoRepository.findById(id).map(curso -> {
+   curso.setActive(!curso.isActive());
+   return cursoRepository.save(curso);
+  });
+}
+
+
 }
