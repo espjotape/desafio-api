@@ -5,6 +5,8 @@ import java.util.UUID;
 import java.util.Optional;
 
 import br.com.joaopedro.desafio_api.entities.Curso;
+import br.com.joaopedro.desafio_api.enums.StatusCurso;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,12 +52,18 @@ public class CursoUseCase {
   cursoRepository.deleteById(id);
  }
 
- public Optional<Curso> checkCurso(UUID id) {
+public Optional<Curso> checkCurso(UUID id) {
   return cursoRepository.findById(id).map(curso -> {
-   curso.setActive(!curso.isActive());
-   return cursoRepository.save(curso);
-  });
+  // Alterna entre ATIVO e INATIVO
+    if (curso.getStatus() == StatusCurso.ATIVO) {
+      curso.setStatus(StatusCurso.INATIVO);
+    } else {
+      curso.setStatus(StatusCurso.ATIVO);
+    }
+    return cursoRepository.save(curso);
+    });
 }
+
 
 
 }
