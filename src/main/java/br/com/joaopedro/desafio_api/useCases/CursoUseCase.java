@@ -6,9 +6,11 @@ import java.util.Optional;
 
 import br.com.joaopedro.desafio_api.entities.Curso;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.com.joaopedro.desafio_api.repository.CursoRepository;
 
+@Service
 public class CursoUseCase {
  
  @Autowired
