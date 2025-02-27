@@ -1,6 +1,7 @@
 package br.com.joaopedro.desafio_api.entities;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -20,7 +21,7 @@ public class Curso {
 
  @Id
  @GeneratedValue(strategy = GenerationType.UUID)
- private int id;
+ private UUID id;
 
  @Column(nullable = false)
  private String name;
