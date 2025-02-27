@@ -8,6 +8,6 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CursoRepository extends JpaRepository<Curso, UUID> {
- List<Curso> findByNameContainingIgnoreCase (String name, String category);
+ List<Curso> findByNameContainingIgnoreCaseOrCategoryContainingIgnoreCase (String name, String category);
  
 } 
