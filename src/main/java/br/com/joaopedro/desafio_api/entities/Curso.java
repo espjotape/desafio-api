@@ -33,6 +33,10 @@ public class Curso {
  @Column(nullable = false)
  private String category;
 
+ @NotBlank(message = "O nome do professor(a) é obrigatório.")
+ @Column(nullable = false)
+ private String teacherName;
+
  @Enumerated(EnumType.STRING)
  @Column(name = "status", nullable = false)
  private StatusCurso status = StatusCurso.ATIVO;
