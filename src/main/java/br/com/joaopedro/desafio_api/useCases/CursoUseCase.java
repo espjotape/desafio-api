@@ -26,7 +26,7 @@ public class CursoUseCase {
   return cursoRepository.save(curso);
  }
 
- public List<Curso> listarCursos(String name, String category) {
+ public List<Curso> listarCursos(String name, String category, String teacherName) {
   if (name != null || category != null ) {
    return cursoRepository.findByNameContainingIgnoreCaseOrCategoryContainingIgnoreCase(name, category);
   }

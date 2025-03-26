@@ -34,7 +34,7 @@ public class Curso {
  private String category;
 
  @NotBlank(message = "O nome do professor(a) é obrigatório.")
- @Column(nullable = false)
+ @Column(nullable = true) // Permitindo valores nulos
  private String teacherName;
 
  @Enumerated(EnumType.STRING)

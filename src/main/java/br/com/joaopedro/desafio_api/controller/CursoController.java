@@ -49,9 +49,10 @@ public class CursoController {
  @GetMapping
  public ResponseEntity<List<Curso>> listarCursos (
   @RequestParam(required = false) String name,
-  @RequestParam(required = false) String category ) {
+  @RequestParam(required = false) String category,
+  @RequestParam(required = false) String teacherName ) {
 
-   List<Curso> cursos = cursoUseCase.listarCursos(name, category);
+   List<Curso> cursos = cursoUseCase.listarCursos(name, category, teacherName);
    return ResponseEntity.ok(cursos);
 
   }
