@@ -64,6 +64,8 @@ public Optional<Curso> checkCurso(UUID id) {
     });
 }
 
-
+  public Optional<Curso> buscarCursoPorId(UUID id) {
+    return cursoRepository.findById(id);
+  }
 
 }

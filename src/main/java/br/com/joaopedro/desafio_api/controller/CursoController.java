@@ -92,4 +92,11 @@ public class CursoController {
      return ResponseEntity.status(500).body("Erro ao ativar/desativar o curso.");
    }
  }
+
+ @GetMapping("/{id}")
+  public ResponseEntity<?> buscarCursoPorId(@PathVariable UUID id) {
+  return cursoUseCase.buscarCursoPorId(id)
+    .map(ResponseEntity::ok)
+    .orElseThrow(() -> new CursoNotFoundException("Curso não encontrado com o ID: " + id));
+  }
 }
