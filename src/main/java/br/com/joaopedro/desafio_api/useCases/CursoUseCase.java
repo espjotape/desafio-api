@@ -23,6 +23,9 @@ public class CursoUseCase {
  }
 
  public Curso criarCurso(Curso curso) {
+  if(curso.getTeacherName() == null || curso.getTeacherName().trim().isEmpty()){
+    curso.setTeacherName("Sem professor");
+  }
   return cursoRepository.save(curso);
  }
 
@@ -45,9 +48,12 @@ public class CursoUseCase {
     curso.setCategory(cursoAtualizado.getCategory());
    }
 
-   if(cursoAtualizado.getTeacherName() != null) {
-    curso.setTeacherName(cursoAtualizado.getTeacherName());
-   }
+   if (cursoAtualizado.getTeacherName() == null || cursoAtualizado.getTeacherName().trim().isEmpty()) {
+    curso.setTeacherName("Sem professor");
+    } else {
+      curso.setTeacherName(cursoAtualizado.getTeacherName());
+    }
+
   return cursoRepository.save(curso);
   });
  }
