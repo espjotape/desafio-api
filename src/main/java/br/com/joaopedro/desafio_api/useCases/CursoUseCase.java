@@ -44,6 +44,10 @@ public class CursoUseCase {
    if (cursoAtualizado.getCategory() != null) {
     curso.setCategory(cursoAtualizado.getCategory());
    }
+
+   if(cursoAtualizado.getTeacherName() != null) {
+    curso.setTeacherName(cursoAtualizado.getTeacherName());
+   }
   return cursoRepository.save(curso);
   });
  }
